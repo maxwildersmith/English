@@ -62,7 +62,7 @@ public class AddStudent extends JFrame {
 		
 		setVisible(true);
 	}
-	public AddStudent(InputWindow win, boolean edit) throws HeadlessException {
+	public AddStudent(InputWindow win, Person p) throws HeadlessException {
 		parent = win;
 		this.setLayout(new BoxLayout(this.getContentPane(),BoxLayout.PAGE_AXIS));
 		setTitle("Add Student");
@@ -75,7 +75,7 @@ public class AddStudent extends JFrame {
 		
 		topics.setColumns(20);
 		
-		addP = new JButton("Add");
+		addP = new JButton("Apply");
 		addP.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

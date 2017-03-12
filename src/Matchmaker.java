@@ -85,8 +85,10 @@ public class Matchmaker {
 		Collections.sort(topics);
 		for(int i=0;i<topics.size();i++)
 			if(topics.get(i).getOnes()/groupSize>1){
-				topics.add(i+1,topics.get(i));
-				i++;
+				for(int x=1;x<topics.get(i).getOnes()/groupSize;x++) {
+					topics.add(i + 1, topics.get(i));
+					i++;
+				}
 			}
 		System.err.println(topics.toString());
 		

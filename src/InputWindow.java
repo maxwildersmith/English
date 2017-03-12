@@ -8,18 +8,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class InputWindow extends JFrame {
 
@@ -77,6 +68,16 @@ public class InputWindow extends JFrame {
 		});
 		
 		JList list = new JList(listMod);
+		list.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				ListSelectionModel model = (ListSelectionModel)e.getSource();
+				for(int i= model.getMinSelectionIndex();i<model.getMaxSelectionIndex();i++)
+					if(model.isSelectedIndex(i))
+						new AddStudent(InputWindow.this,people.get(i));
+			}
+		});
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		scroll = new JScrollPane();
 		
 		//list.setSize(200, 100);
@@ -111,11 +112,21 @@ public class InputWindow extends JFrame {
 		people.add(p);
 		listMod.clear();
 		Collections.sort(people);
+
 		for(Person x: people)
-			listMod.addElement(new JPerson(x).toString());
+			listMod.addElement(new JPerson(x));
 		scroll.setViewportView(new JList(listMod));
 		//System.err.println(scroll.getComponentCount()+"  "+scroll.getViewport().getComponentCount());
 		
+	}
+
+	public void changeStudent(Person p){
+		people.set(people.indexOf(p),p);
+		listMod.clear();
+		Collections.sort(people);
+		for(Person x: people)
+			listMod.addElement(new JPerson(x).toString());
+		scroll.setViewportView(new JList(listMod));
 	}
 	
 	
